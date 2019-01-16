@@ -109,7 +109,7 @@ server.get('/v1/connect/:user/:repo', (req, res) => {
     if (invitation) {
       return github.api.users.acceptRepoInvite({
         id: invitationId
-      })        
+      })
     } else {
       return Promise.reject()
     }
@@ -144,6 +144,6 @@ server.all('*', (req, res) => {
 
 process.on('unhandledRejection', (reason, promise) => {
   if (reason) {
-    ErrorHandler.log(reason)  
+    ErrorHandler.log(reason)
   }
 })
