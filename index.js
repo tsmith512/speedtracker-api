@@ -72,44 +72,6 @@ server.get('/v1/test/:user/:repo/:branch/:profile', testHandler)
 server.post('/v1/test/:user/:repo/:branch/:profile', testHandler)
 
 // ------------------------------------
-// Endpoint: Connect
-// ------------------------------------
-
-server.get('/v1/connect/:user/:repo', (req, res) => {
-  const github = new GitHub(GitHub.GITHUB_CONNECT)
-
-  github.authenticate(config.get('githubToken'))
-
-  github.api.users.getRepoInvites({}).then(response => {
-    let invitationId
-    let invitation = response.some(invitation => {
-      if (invitation.repository.full_name === (req.params.user + '/' + req.params.repo)) {
-        invitationId = invitation.id
-
-        return true
-      }
-    })
-
-    if (invitation) {
-      return github.api.users.acceptRepoInvite({
-        id: invitationId
-      })
-    } else {
-      return Promise.reject()
-    }
-  }).then(response => {
-    // Track event
-    new Analytics().track(Analytics.Events.CONNECT)
-
-    res.send('OK!')
-  }).catch(err => {
-    ErrorHandler.log(err)
-
-    res.status(500).send('Invitation not found.')
-  })
-})
-
-// ------------------------------------
 // Endpoint: Catch all
 // ------------------------------------
 
