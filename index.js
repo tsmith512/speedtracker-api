@@ -15,11 +15,19 @@ const argv = require('yargs')
   .default('b', 'master')
   .describe('p', 'Dashboard profile to test')
   .alias('p', 'profile')
+  .describe('v', 'Output: 0 = errors only, 1 = info, 2 = debug')
+  .alias('v', 'verbose')
+  .count('v')
   .demandOption(['u', 'r', 'p'])
   .help('h')
   .alias('h', 'help')
   .argv;
 
+/* This is probably not a very "good" way to do this, but I'm still building */
+const VERBOSE_LEVEL = argv.v;
+function WARN()  { VERBOSE_LEVEL >= 0 && console.log.apply(console, arguments); }
+function INFO()  { VERBOSE_LEVEL >= 1 && console.log.apply(console, arguments); }
+function DEBUG() { VERBOSE_LEVEL >= 2 && console.log.apply(console, arguments); }
 
 // ------------------------------------
 // GitHub
@@ -44,6 +52,8 @@ const testHandler = (options) => {
     return res.status(429).send()
   }
 
+  INFO(['Configuring new SpeedTracker for ', options.user, '/', options.repo, '@', options.branch, ':', options.profile].join(''));
+
   const speedtracker = new SpeedTracker({
     branch: options.branch,
     remote: github,
@@ -53,20 +63,26 @@ const testHandler = (options) => {
 
   let profileName = options.profile
 
+  DEBUG('Starting test')
   speedtracker.runTest(profileName).then(response => {
-    console.log(JSON.stringify(response))
+    INFO('Test complete')
+    DEBUG(response)
   }).catch(err => {
     ErrorHandler.log(err)
-    console.log(JSON.stringify(err))
+    WARN(err)
   })
 }
 
-testHandler({
+const options = {
   user: argv.user,
   repo: argv.repo,
   branch: argv.branch,
   profile: argv.profile
-});
+};
+
+DEBUG(options);
+
+testHandler(options);
 
 // ------------------------------------
 // Basic error logging
