@@ -17,7 +17,7 @@ github.authenticate(config.get('githubToken'))
 
 
 // ------------------------------------
-// Endpoint: Test
+// Kick off the test process with args
 // ------------------------------------
 
 const testHandler = (options) => {
@@ -47,17 +47,12 @@ const testHandler = (options) => {
   })
 }
 
-// server.get('/v1/test/:user/:repo/:branch/:profile', testHandler)
-// server.post('/v1/test/:user/:repo/:branch/:profile', testHandler)
-
-const testOptions = {
+testHandler({
   user: argv.user,
   repo: argv.repo,
   branch: argv.branch,
   profile: argv.profile
-};
-
-testHandler(testOptions);
+});
 
 // ------------------------------------
 // Basic error logging
