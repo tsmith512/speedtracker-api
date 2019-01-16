@@ -3,11 +3,9 @@
 const Analytics = require('./lib/Analytics')
 const config = require('./config')
 const cors = require('cors')
-// const Database = require('./lib/Database')
 const ErrorHandler = require('./lib/ErrorHandler')
 const express = require('express')
 const GitHub = require('./lib/GitHub')
-// const Scheduler = require('./lib/Scheduler')
 const SpeedTracker = require('./lib/SpeedTracker')
 
 // ------------------------------------
@@ -17,12 +15,6 @@ const SpeedTracker = require('./lib/SpeedTracker')
 const server = express()
 
 server.use(cors())
-
-// ------------------------------------
-// Scheduler
-// ------------------------------------
-
-// let scheduler
 
 // ------------------------------------
 // GitHub
