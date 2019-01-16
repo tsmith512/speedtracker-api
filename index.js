@@ -1,6 +1,5 @@
 'use strict'
 
-const Analytics = require('./lib/Analytics')
 const config = require('./config')
 const cors = require('cors')
 const ErrorHandler = require('./lib/ErrorHandler')
