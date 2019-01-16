@@ -3,11 +3,11 @@
 const Analytics = require('./lib/Analytics')
 const config = require('./config')
 const cors = require('cors')
-const Database = require('./lib/Database')
+// const Database = require('./lib/Database')
 const ErrorHandler = require('./lib/ErrorHandler')
 const express = require('express')
 const GitHub = require('./lib/GitHub')
-const Scheduler = require('./lib/Scheduler')
+// const Scheduler = require('./lib/Scheduler')
 const SpeedTracker = require('./lib/SpeedTracker')
 
 // ------------------------------------
@@ -22,7 +22,7 @@ server.use(cors())
 // Scheduler
 // ------------------------------------
 
-let scheduler
+// let scheduler
 
 // ------------------------------------
 // GitHub
@@ -34,19 +34,13 @@ github.authenticate(config.get('githubToken'))
 
 // ------------------------------------
 // DB connection
+// @TODO: No Dataabse or Scheduler init here, which only leaves
+// opening the Express server to listen on the config port, which was originally
+// in the database connection callback.
 // ------------------------------------
 
-let db = new Database(connection => {
-  console.log('(*) Established database connection')
-
-  server.listen(config.get('port'), () => {
-    console.log(`(*) Server listening on port ${config.get('port')}`)
-  })
-
-  scheduler = new Scheduler({
-    db: connection,
-    remote: github
-  })
+server.listen(config.get('port'), () => {
+  console.log(`(*) Server listening on port ${config.get('port')}`)
 })
 
 // ------------------------------------
@@ -64,12 +58,10 @@ const testHandler = (req, res) => {
   }
 
   const speedtracker = new SpeedTracker({
-    db,
     branch: req.params.branch,
     key: req.query.key,
     remote: github,
     repo: req.params.repo,
-    scheduler,
     user: req.params.user
   })
 
