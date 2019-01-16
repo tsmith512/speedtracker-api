@@ -41,42 +41,6 @@ var conf = convict({
       env: 'SPARKBOX_API_KEY'
     }
   },
-  database: {
-    uri: {
-      doc: 'Mongo database connection URI',
-      format: String,
-      default: null,
-      env: 'MONGODB_URI'
-    },
-    reposCollection: {
-      doc: 'Name of the collection to be used for storing repositories',
-      format: String,
-      default: 'st_repos',
-      env: 'COLLECTION_REPOS'
-    }
-  },
-  scheduling: {
-    checkInterval: {
-      doc: 'Interval at which the Scheduler checks for tests to run (in milliseconds)',
-      format: Number,
-      default: 900000,
-      env: 'SCHEDULING_CHECK_INTERVAL'
-    },
-    minimumInterval: {
-      doc: 'Minimum interval allowed for scheduled tests (in hours)',
-      format: Number,
-      default: 12,
-      env: 'SCHEDULING_MIN_INTERVAL'
-    }
-  },
-  analytics: {
-    googleAnalyticsId: {
-      doc: 'Google Analytics account ID',
-      format: String,
-      default: null,
-      env: 'GOOGLE_ANALYTICS_ID'
-    }
-  },
   raygunApiKey: {
     doc: 'Raygun API key',
     format: String,
@@ -105,7 +69,7 @@ try {
 
   console.log('(*) Local config file loaded')
 } catch (e) {
-  
+
 }
 
 module.exports = conf
