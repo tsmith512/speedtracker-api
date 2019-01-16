@@ -14,7 +14,6 @@
     "body-parser": "^1.15.2",
     "convict": "^1.4.0",
     "cors": "^2.8.1",
-    "crypto": "0.0.3",
     "express": "^4.14.0",
     "github": "^3.0.0",
     "js-yaml": "^3.6.1",
