@@ -4,7 +4,21 @@ const config = require('./config')
 const ErrorHandler = require('./lib/ErrorHandler')
 const GitHub = require('./lib/GitHub')
 const SpeedTracker = require('./lib/SpeedTracker')
-const argv = require('yargs').argv;
+const argv = require('yargs')
+  .usage('Usage: node index.js [options]')
+  .describe('u', 'GitHub user who owns the reporting dashboard repo')
+  .alias('u', 'user')
+  .describe('r', 'GitHub repo for the reporting dashboard')
+  .alias('r', 'repo')
+  .describe('b', 'Git branch to query and update')
+  .alias('b', 'branch')
+  .default('b', 'master')
+  .describe('p', 'Dashboard profile to test')
+  .alias('p', 'profile')
+  .demandOption(['u', 'r', 'p'])
+  .help('h')
+  .alias('h', 'help')
+  .argv;
 
 
 // ------------------------------------
