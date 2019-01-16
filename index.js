@@ -1,19 +1,10 @@
 'use strict'
 
 const config = require('./config')
-const cors = require('cors')
 const ErrorHandler = require('./lib/ErrorHandler')
-const express = require('express')
 const GitHub = require('./lib/GitHub')
 const SpeedTracker = require('./lib/SpeedTracker')
 
-// ------------------------------------
-// Server
-// ------------------------------------
-
-const server = express()
-
-server.use(cors())
 
 // ------------------------------------
 // GitHub
